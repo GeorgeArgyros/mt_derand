@@ -3,7 +3,7 @@
 #include "unroll.hpp"
 #include "gauss.hpp"
 #include "derand.hpp"
-#include "test.hpp"
+#include "test_components.hpp"
 #include "mtrand.hpp"
 
 
