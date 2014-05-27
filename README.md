@@ -7,6 +7,7 @@ applications tend to use it for cryptographic operations. Specifically,
 many web applications tend to use Mersenne Twister as it is the default 
 PRNG in the PHP core system. This led in many attacks in PHP applications 
 in the past, see for example the paper: 
+
 "I Forgot Your Password: Randomness Attacks in PHP applications"
 
 In a nutshell Mersenne Twister generator is a linear generator. This means that
