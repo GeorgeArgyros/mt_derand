@@ -27,7 +27,7 @@ unroll.o: unroll.cpp unroll.hpp
 server.o: server.cpp server.hpp
 	$(CC) $(CFLAGS) -c server.cpp
 
-test_components.o: test_components.cpp
+test_components.o: test_components.cpp test_components.hpp
 	$(CC) $(CFLAGS) -c test_components.cpp
 
 test_components: $(TEST_TARGETS)
