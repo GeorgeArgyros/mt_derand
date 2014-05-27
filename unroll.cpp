@@ -27,8 +27,8 @@ MTUnroller::MTUnroller(bool php)
 void
 MTUnroller::latexPrintTempering()
 {
-  int j;
-  for (int i = 0; i < 32; i ++) {
+  unsigned int i,j;
+  for (i = 0; i < 32; i ++) {
     std::cout << "$$ z_{" << i << "} = "; 
     for (j = 0; j < tempering[i].size()-1; j ++)
       std::cout <<"x_{" << tempering[i][j] << "} \\oplus ";

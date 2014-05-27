@@ -8,9 +8,20 @@ extern "C"{
 # include <unistd.h>
 }
 
-
 #define N 624
 
+#define PHP  1
+#define PORT  2
+#define BACKGROUND  3
+#define HELP 4
+
+static struct option long_options[] = {
+  {"php",   no_argument, 0,  PHP },
+  {"port", required_argument, 0, PORT},
+  {"daemon", no_argument, 0, BACKGROUND},
+  {"help", no_argument, 0, HELP},
+  {0, 0, 0,  0}
+};
 
 void
 MTDerand::cmdSolveSystem()
@@ -78,25 +89,15 @@ MTDerand::start()
   
   while (1) {   
  
-#ifdef __DEBUG__
-    std::cout << " [d][i] Waiting for client\n";
-#endif
-    if (server.isIdle())
+     if (server.isIdle())
       server.waitForClient();
 
-#ifdef __DEBUG__
-    std::cout <<"[d][i] Waiting for data\n";
-#endif
-    
     if (server.crecv(cmd, cmdSize) <= 0)
       continue;
     
     switch (cmd[0]) {
     case cmdLeak:
       is = solver.addEquation(unroller.getNextEquation(), (bool) cmd[1]);
-#ifdef __DEBUG__
-      std::cout << "[d][l] Added bit " << (bool)cmd[1] << std::endl;
-#endif
         solver.printStats();
       if (solver.isSolvable())
         rsp = rspSolvable;
@@ -107,9 +108,6 @@ MTDerand::start()
     case cmdSkip:
       s  = (unsigned char)cmd[1];
       unroller.skipEquations((unsigned short int) s);
-#ifdef __DEBUG__
-      std::cout << "[d][s] Skipped " << s << " equations." << std::endl;
-#endif
       server.csend(&rsp, respSize);
       break;
     case cmdSolve:    
@@ -139,17 +137,6 @@ MTDerand::start()
 }
 
 
-#define PHP  1
-#define PORT  2
-#define BACKGROUND  3
-
-static struct option long_options[] = {
-  {"php",   no_argument, 0,  PHP },
-  {"port", required_argument, 0, PORT},
-  {"daemon", no_argument, 0, BACKGROUND},
-  {0, 0, 0,  0}
-};
-
 
 int main(int argc, char *argv[])
 {
@@ -157,7 +144,7 @@ int main(int argc, char *argv[])
   unsigned short int port = 8080;
   int c,options_index = 0;
   
-  while ((c = getopt_long(argc, argv, "dp:", long_options, &options_index)) 
+  while ((c = getopt_long(argc, argv, "", long_options, &options_index)) 
 	 != -1) {
     switch (c) {
     case PORT:
@@ -171,7 +158,17 @@ int main(int argc, char *argv[])
       std::cout << "[+] Generator set to the PHP generator" << std::endl;
       php = true;
       break;
+    case HELP:
+      std::cout << "Derandomization server.\n"
+                << "Options: \n"
+                << " --php: The generator used will be set to the PHP generator.\n"
+                << " --port <p>: Bind to the specified port (default 8080).\n"
+                << " --daemon: Run the server on the background.\n"
+                << " --help: Print this help menu.\n"
+                << std::endl;
+      return EXIT_SUCCESS;  
     default:
+      std::cout << "Type --help for help." << std::endl;
       return EXIT_FAILURE;
     }
   }
