@@ -134,7 +134,7 @@ convertToPHPState(std::vector <bool> sol)
 
 bool testUnroller()
 {
-	std::cout <<"==-Testing Linear Equations Produced for Mersenne Twister-==" 
+	std::cout <<"==- Testing Linear Equations Produced for Mersenne Twister -==" 
 		<< std::endl;
 
 
@@ -186,7 +186,7 @@ bool testUnroller()
 
 bool testSolver()
 {
-	std::cout <<" ==-Testing Gaussian Solver for state recovery-== " 
+	std::cout <<" ==- Testing Gaussian Solver for state recovery -== " 
 		<< std::endl;
 
 

@@ -14,6 +14,7 @@ DERAND_SERVER='./derand'
 def main():
 	"""
 	"""
+	print '==- Testing derandomization client python API -=='
 	devnull = open('/dev/null', 'w')
 	for php in range(2):
 
@@ -24,9 +25,9 @@ def main():
 		sleep(1) # Give time to the server to startup
 
 		if php == True:
-			print 'Testing MTDerandClient on PHP Generator:',
+			print '[+] Testing MTDerandClient on PHP Generator:',
 		else:
-			print 'Testing MTDerandClient on MT Generator:',
+			print '[+] Testing MTDerandClient on MT Generator:',
 
 		seed = randrange(1 << 31)
 		derand = MTDerandClient(php)
